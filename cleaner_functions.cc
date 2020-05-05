@@ -49,7 +49,10 @@ string getLocation(){
   output_from_command = popen(shellcmd.c_str(), "r");
   current_dir = fgets(tmpBuffer, BUFFER_SIZE, output_from_command);
   cout << "Directory before chdir: " << current_dir << endl;
-  chdir("$HOME");
+  // " ~ " is an expansion handelled by the shell not system cmd
+  // so use getenv() to go to home directory
+  chdir(getenv("HOME"));
+  chdir("Desktop");
   pclose(output_from_command);
   output_from_command = popen(shellcmd.c_str(), "r");
   current_dir = fgets(tmpBuffer, BUFFER_SIZE, output_from_command);
