@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <map>
 #include "header.h"
+#include <unistd.h>   // needed for chdir() function
+
+#define BUFFER_SIZE 1024
 
 using namespace std;
 
@@ -10,7 +13,6 @@ using namespace std;
 //string getLocation();
 
 void getClassList(){
-  
   map<int, string> class_map;
 }
 void welcomeMessage(){
@@ -31,9 +33,28 @@ void welcomeMessage(){
 }
 string getLocation(){
   string res;
-  cout << "Would you like to clean your desktop or folder?(D/F):" << endl;
+  // shell commnad to get current directory
+  string shellcmd = "pwd";
+  string shellcmd2 = "cd";
+  
+  FILE  *output_from_command;
+
+  char tmpBuffer[BUFFER_SIZE];
+  char *current_dir;
+  cout << "Would you like to clean your desktop or folder?(D/F): ";
   cin >> res;
-  cout << "res: " << endl;
+  // if(checkUserInput()){
+  //}
+  // check if currently in desktop
+  output_from_command = popen(shellcmd.c_str(), "r");
+  current_dir = fgets(tmpBuffer, BUFFER_SIZE, output_from_command);
+  cout << "Directory before chdir: " << current_dir << endl;
+  chdir("$HOME");
+  pclose(output_from_command);
+  output_from_command = popen(shellcmd.c_str(), "r");
+  current_dir = fgets(tmpBuffer, BUFFER_SIZE, output_from_command);
+  cout << "Directory after chdir: " << current_dir << endl;
+  pclose(output_from_command);
   return "";
 }
 string getFolderName(){
@@ -41,7 +62,7 @@ string getFolderName(){
   // string path == findDesktop();
   return "";
 }
-boolean askUserLocation(){
+bool askUserLocation(){
   string res = getLocation();
   while(res.length() > 1 || res != "y" || res != "Y" || res != "n" || res != "N" ){
     if(res == "desktop" || res == "Desktop" || res == "DESKTOP"){
@@ -55,6 +76,7 @@ boolean askUserLocation(){
   else if (res == "n" || res == "N"){
     return false;
   }
+  return false;
 }
 void findDesktop(){
 
