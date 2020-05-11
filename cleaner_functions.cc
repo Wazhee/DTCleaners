@@ -9,8 +9,8 @@
 
 using namespace std;
 
-//void askUserLocation();
-//string getLocation();
+// void askUserLocation();
+// string getLocation();
 
 void getClassList(){
   map<int, string> class_map;
@@ -32,8 +32,16 @@ void welcomeMessage(){
   cout << "\n\n\n" << endl;
 }
 string getLocation(){
-  string res;
-  // shell commnad to get current directory
+ 
+  return "";
+}
+string getFolderName(){
+  // if(askUserLocation() == true ) string path == findDesktop();
+  // string path == findDesktop();
+  return "";
+}
+void findDesktop(){
+    // shell commnad to get current directory
   string shellcmd = "pwd";
   string shellcmd2 = "cd";
   
@@ -41,11 +49,7 @@ string getLocation(){
 
   char tmpBuffer[BUFFER_SIZE];
   char *current_dir;
-  cout << "Would you like to clean your desktop or folder?(D/F): ";
-  cin >> res;
-  // if(checkUserInput()){
-  //}
-  // check if currently in desktop
+  
   output_from_command = popen(shellcmd.c_str(), "r");
   current_dir = fgets(tmpBuffer, BUFFER_SIZE, output_from_command);
   cout << "Directory before chdir: " << current_dir << endl;
@@ -58,29 +62,27 @@ string getLocation(){
   current_dir = fgets(tmpBuffer, BUFFER_SIZE, output_from_command);
   cout << "Directory after chdir: " << current_dir << endl;
   pclose(output_from_command);
-  return "";
 }
-string getFolderName(){
-  // if(askUserLocation() == true ) string path == findDesktop();
-  // string path == findDesktop();
-  return "";
-}
-bool askUserLocation(){
-  string res = getLocation();
-  while(res.length() > 1 || res != "y" || res != "Y" || res != "n" || res != "N" ){
-    if(res == "desktop" || res == "Desktop" || res == "DESKTOP"){
-      
-    }
-    res = getLocation();
+void cleanDesktop(){
+  // make new directory
+  check = mkdir("DTCleaners");    // need date for versioning
+  if(!check()){
+    // mkdir() failed
+    cout << "System failed to make new directory" << endl;
+  } else {
+    // mkdir() was successful
   }
-  if(res == "y" || res == "Y"){
-    return true;
-  }
-  else if (res == "n" || res == "N"){
-    return false;
-  }
-  return false;
-}
-void findDesktop(){
+  
+  string shellcmd = "ls";
+  string shellcmd = "mv";
+  FILE *output_from_command;
+  char *tmpBuffer[BUFFER_SIZE];
 
+  
+  output_from_command = popen(shellcmd.c_stry(), "r");
+  line = fgets(tmpBuffer, BUFFER_SIZE, output_from_command);
+  while(line != NULL){
+    cout << shellcmd + " ./" + line + " ./DTCleaners";
+    line = fgets(tmpBuffer, BUFFER_SIZE, output_from_command);
+  }
 }
